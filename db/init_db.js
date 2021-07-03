@@ -45,16 +45,10 @@ async function buildTables() {
 
 async function populateInitialData() {
   try {
-    // create useful starting data
-    await client.query(`
-      INSERT INTO links (link_name) VALUES ('www.google.com');
-      INSERT INTO tags (tag_name) VALUES ('search');
-      INSERT INTO links_tags ("linksId", "tagsId")
-      VALUES (
-        (SELECT id FROM links WHERE link_name = 'www.google.com' LIMIT 1),
-        (SELECT id FROM tags WHERE tag_name = 'search' LIMIT 1)
-      )
-    `)
+    const linksId = await insertLink('www.espn.com');
+    const tagsId = await insertTag('sports');
+    await insertLinkTag(linksId, tagsId);
+
   } catch (error) {
     throw error;
   }
