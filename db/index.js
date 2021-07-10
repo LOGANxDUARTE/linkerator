@@ -1,52 +1,39 @@
-// // Connect to DB
-// const { Client } = require('pg');
-// const DB_NAME = 'linkerator'
-// const DB_URL = process.env.DATABASE_URL || `postgres://localhost:5432/${ DB_NAME }`;
-// const client = new Client(DB_URL);
+const { 
+  addTagsToLink,
+  createLink,
+  getLinkById,
+  getLinkByTagName,
+  getAllLinks,
+  updateLink,
+  deleteLink, 
+} = require('./links.js');
 
-// // database methods
-// const insertLink = async (link_name) => {
-//   const { rows } = await client.query(`
-//     INSERT INTO links (link_name) VALUES ($1) RETURNING id;
-//   `, [link_name]);
+const {
+  createTags,
+  getAllTags,
+  getTagById,
+  deleteTag
+} = require('./tags.js');
 
-//   return rows[0].id;
-// };
+const {
+  createLinkTag,
+  getLinkTagById,
+  getAllLinkTags
+} = require('./link_tags.js');
 
-// const insertTag = async (tag_name) => {
-//   const { rows } = await client.query(`
-//   INSERT INTO tags (tag_name) VALUES ($1) RETURNING id;
-//   `, [tag_name]);
-
-// return rows[0].id;
-// };
-
-// const insertLinkTag = async (linksId, tagsId) => {
-//   const { rows } = await client.query(`
-//   INSERT INTO links_tags ("linksId", "tagsId")
-//   VALUES ($1, $2)
-//   RETURNING id;
-//   `, [linksId, tagsId]);
-
-//   return rows[0].id;
-// };
-
-// const getTagLinks = (tag) => {
-//   const { rows } = await client.query(`
-//     SELECT 
-//   `);
-// };
-
-// // export
-// module.exports = {
-//   client,
-//   insertLink,
-//   insertTag,
-//   insertLinkTag,
-// };
-
-export default {
-  ...require('./links'),
-  ...require('./tags'),
-  ...require('./link_tags'),
+module.exports = {
+  addTagsToLink,
+  createLink,
+  getLinkById,
+  getLinkByTagName,
+  getAllLinks,
+  updateLink,
+  deleteLink,
+  createTags,
+  getAllTags,
+  getTagById,
+  deleteTag,
+  createLinkTag,
+  getLinkTagById,
+  getAllLinkTags
 };

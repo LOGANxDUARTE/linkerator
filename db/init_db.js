@@ -1,6 +1,6 @@
 // code to build and initialize DB goes here
 const { client } = require('./client');
-const { createLink } = require('/links');
+const { createLink } = require('./links');
 const { createTags } = require('./tags');
 const { createLinkTag } = require('./link_tags');
 
@@ -10,9 +10,9 @@ async function buildTables() {
 
     // drop tables in correct order
     await client.query(`
-      DROP TABLE IF EXISTS link_tags;
-      DROP TABLE IF EXISTS tags;
-      DROP TABLE IF EXISTS links; 
+      DROP TABLE IF EXISTS link_tags CASCADE;
+      DROP TABLE IF EXISTS tags CASCADE;
+      DROP TABLE IF EXISTS links CASCADE; 
     `)
 
     // build tables in correct order
@@ -27,10 +27,10 @@ async function buildTables() {
     
       CREATE TABLE tags (
         id SERIAL PRIMARY KEY,
-        tag_name VARCHAR(255) NOT NULL
+        tag_name VARCHAR(255) NOT NULL UNIQUE
       );
       
-      CREATE TABLE links_tags (
+      CREATE TABLE link_tags (
         id SERIAL PRIMARY KEY,
         "linksId" INT REFERENCES links(id) ON DELETE CASCADE NOT NULL,
         "tagsId" INT REFERENCES tags(id) ON DELETE CASCADE NOT NULL,
